@@ -1,0 +1,25 @@
+@use "mixin" as * 
+@use 'sass:list'
+
+$backgroundColor: #FBF8ED
+$greyColor50: #F0F0F0
+$greyColor: #ECECEC, #E4E4E4, #DCDCDC, #D3D3D3, #CBCBCB, #ABABAB, #8A8A8A, #6A6A6A, #494949
+
+// 將所有顏色變數整合成一個 Map
+$theme-colors: ('black': #000, 'white': #FFF, 'text': #403D39, 'primary': #1D899F, 'primary-light': #D3E9ED, 'primary-dark': #145D6C, 'secondary': #F9C15C, 'secondary-light': #FFECC8, 'secondary-dark': #AD8945, 'success': #129D4F, 'danger': #F43A3A, 'warning': #E7C714)
+
+body
+    background-color: $backgroundColor
+
+// 使用 @each 迴圈批量生成所有樣式
+@each $name, $color in $theme-colors
+    // 生成背景顏色類： .bg-<name>
+    @include bgc(bg-#{$name}, $color)
+    // 生成文字顏色類： .<name>
+    @include color(#{$name}, $color)
+
+@include color(grey-50,$greyColor50)
+@include bgc(grey-50,$greyColor50)
+@for $i from 1 through 9
+    @include color(grey-#{$i}00, list.nth($greyColor, $i))
+    @include bgc(bg-grey-#{$i}00, list.nth($greyColor, $i))
